@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en" ng-app="myModule">
+<head>
+    <title>Pulse Perf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+    <style>
+        body {
+            padding-top: 60px;
+        }
+        .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+    </style>
+    <script src="http://localhost:3001/socket.io/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+
+    <script src="/js/controllers.js"></script>
+</head>
+<body>
+<div class="container" ng-controller="ChatController">
+    <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+            <div class="pull-right">
+                <a href="https://c9.io" class="brand">Pulse</a>
+            </div>
+        </div>
+    </div>
+    <div class="page-header">
+        <h1>Performance Counters</h1>
+    </div>
+    <div class="row">
+        <div class="span3">
+            <ul class="nav nav-list well">
+                <li class="nav-header">Local Users</li>
+                <li ng-repeat="user in roster" ng-bind="user">
+                </li>
+            </ul>
+        </div>
+        <div class="span9">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th class="span2">Name</th>
+                    <th class="span7">Text</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="msg in messages">
+                    <td class="span2" ng-bind="msg.name"></td>
+                    <td class="span7" ng-bind="msg.text"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="row controls">
+                <form ng-submit="send()">
+                    <div class="span2"><input type="text" class="input-block-level" ng-model="name"
+                                              ng-change="setName()" placeholder="Your Name"></div>
+                    <div class="input-append span7">
+                        <input type="text" class="span6" ng-model="text" placeholder="Message">
+                        <input type="submit" class="span1 btn btn-primary" value="Send" ng-disabled="!text">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <table class="table table-striped table-bordered" ng-repeat="mc in machineCounters">
+
+                <thead>
+                <tr>
+                    <th class="span9">{{mc.machine}} - {{mc.dateTime}}</th>
+                </tr>
+                <tr>
+                    <th class="span2">Counter</th>
+                    <th class="span7">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="ctr in mc.counters">
+                    <td class="span2" ng-bind="ctr.counter"></td>
+                    <td class="span7" ng-bind="ctr.value"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <accordion close-others="true">
+                <accordion-group is-open="true">
+                    <accordion-heading>
+                        I can have markup, too! <i class="pull-right glyphicon"
+                                                   ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </accordion-heading>
+                    This is just some content to illustrate fancy headings.
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <h2>Collapse</h2>
+
+            <a href="#" class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">
+                Toggle Panel
+            </a>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a href="#" ng-click="isCollapsed = !isCollapsed">
+                            Collapsible Group Item #1
+                        </a>
+                    </h4>
+                </div>
+                <div collapse="isCollapsed">
+                    <div class="panel-body">Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--
+<div>
+    <input type="range" min="0" max="100" ng-model="rangeValue"/>
+    {{rangeValue}} {{machineCounters.length}}
+</div>
+<div ng-repeat="mc in machineCounters">
+    <div>
+        {{mc.machine}} - {{mc.dateTime}}
+        <ul ng-repeat="ctr in mc.counters">
+            <li>{{ctr.counter}} {{ctr.value}}</li>
+        </ul>
+    </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+-->
+<!--
+<script src="/js/jquery.min.js"></script>
+-->
+
+<!-- this works without uibootstrap
+-->
+<!--
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/angular.min.js"></script>
+<script src="/js/controllers.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+-->
+</body>
+</html>
